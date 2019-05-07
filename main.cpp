@@ -12,9 +12,24 @@
  *      ends when the user presses the ENTER key without typing any characters before it.
  *
  * ALGORITHM for main():
- *
+ *  DECLARE variables to hold the string and its length as an integer
+ *  PROMPT user to enter a string and press enter
+ *  STORE the line in 'str'
+ *  BEGIN LOOP DO WHILE
+ *      STORE the length of 'str' using length()
+ *      CALL function isPalindrome() with parameters
+ *      OUTPUT the determination accordingly
+ *      PROMPT user for the next line
+ *      STORE the next line using getline()
+ *  WHILE the cin buffer is not empty, repeat the above
+ *  EXIT
  *
  * ALGORITHM for isPalindrome(string str, int lower, int upper):
+ *  RETURN true if lower >= upper. This means we've gone through the entire string bounds with success.
+ *  TEST equality for str[upper] and str[lower]
+ *      IF equality exists, increment upper, decrement lower, and make the recursive call with these values.
+ *      ELSE return false.
+ *
  *
  *
  */
@@ -27,23 +42,35 @@ bool isPalindrome(string str, int lower, int upper);
 // main function
 int main() {
 
+    // declare variables
     string str;
     int length;
 
+    // greeting
     cout << "\nWelcome to the demo of project 8!\n" << endl;
     cout << "Please enter a string and press ENTER: ";
 
-    cin >> str;
+    // get initial string value
+    getline(cin, str);
 
+    // loop begins
     do {
+        // get the length of the entry
         length = (int) str.length();
+
+        // perform determination
         (isPalindrome(str, 0, length - 1)) ? cout << "\n\tTHIS IS A PALINDROME!!\n\n"
-                                           : cout << "\n\tTHIS IS NOT A PALINDROME!!\n\n";
+            : cout << "\n\tTHIS IS NOT A PALINDROME!!\n\n";
+
+        // prompt for next value
         cout << "Please enter another string and press ENTER (or press ENTER to end): ";
-        cin >> str;
 
-    } while (!str.empty());
+        // get the line
+        getline(cin, str);
 
+    } while (!str.empty()); // keep taking in values until cin buffer is empty
+
+    // conclusion and return
     cout << "\n\nThis concludes the demo for this program!\n";
     return 0;
 }
@@ -62,8 +89,9 @@ bool isPalindrome(string str, int lower, int upper) {
     if (lower >= upper) { return true; } // we've reached the end condition with successful comparisons so far
 
     if (str[lower] == str[upper]) {
-            return isPalindrome(str, (lower + 1), (upper - 1));
+            return isPalindrome(str, (lower + 1), (upper - 1)); // recursive call
     } else {
+        // debugging line
         // cout << "\t\tFALSE CONDITION: lower = " << lower << " : upper = " << upper << endl;
         return false;
     }
